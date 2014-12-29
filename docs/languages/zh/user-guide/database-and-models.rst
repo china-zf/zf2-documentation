@@ -1,10 +1,10 @@
 .. _user-guide.database-and-models:
 
-Database and models
-===================
+数据库模型
+=========
 
-The database
-------------
+数据库
+-----
 
 Now that we have the ``Album`` module set up with controller action methods and
 view scripts, it is time to look at the model section of our application.
@@ -41,7 +41,7 @@ data in it.
 (The test data chosen happens to be the Bestsellers on Amazon UK at the time of
 writing!)
 
-We now have some data in a database and can write a very simple model for it.
+现在数据库中有一些数据,我们可以创建简单的模型.
 
 The model files
 ---------------
@@ -62,7 +62,7 @@ pattern can become limiting in larger systems. There is also a temptation to put
 database access code into controller action methods as these are exposed by
 ``Zend\Db\TableGateway\AbstractTableGateway``. *Don’t do this*!
 
-Let’s start by creating a file called ``Album.php`` under ``module/Album/src/Album/Model``:
+在 ``module/Album/src/Album/Model`` 下创建文件 ``Album.php``:
 
 .. code-block:: php
    :linenos:
@@ -83,12 +83,10 @@ Let’s start by creating a file called ``Album.php`` under ``module/Album/src/A
         }
     }
 
-Our ``Album`` entity object is a simple PHP class. In order to work with
-``Zend\Db``’s ``TableGateway`` class, we need to implement the ``exchangeArray()``
-method. This method simply copies the data from the passed in array to our entity’s
-properties. We will add an input filter for use with our form later.
+我们的 ``Album`` 对象是一个简单的php类, 为了能够在 ``Zend\Db``, ``TableGateway`` 类中工作, 我们需要实现 ``exchangeArray()`` 方法.
+该方法只是简单的实现传递数组数据到实例属性中, 我们将添加一个输入过滤器供后续表单使用.
 
-Next, we create our ``AlbumTable.php`` file in ``module/Album/src/Album/Model`` directory like this:
+下一步, 在 `module/Album/src/Album/Model`` 目录下创建 ``AlbumTable.php`` 文件, 就像:
 
 .. code-block:: php
    :linenos:
