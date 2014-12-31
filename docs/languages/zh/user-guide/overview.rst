@@ -1,70 +1,55 @@
 .. _user-guide.overview:
 
-Getting Started with Zend Framework 2
-=====================================
+Zend Framework 2入门
+====================
 
-This tutorial is intended to give an introduction to using Zend Framework 2 by
-creating a simple database driven application using the Model-View-Controller
-paradigm. By the end you will have a working ZF2 application and you can then
-poke around the code to find out more about how it all works and fits together.
+本教程介绍如何使用ZF2框架,创建一个简单的数据库莫先,view,控制器,在这结束有一个ZF2程序让你了解它是如何工作的.
 
 .. _user-guide.overview.assumptions:
 
-Some assumptions
-----------------
+一些配置
+-------
 
-This tutorial assumes that you are running at least PHP 5.3.23 with the Apache web server
-and MySQL, accessible via the PDO extension. Your Apache installation must have
-the mod_rewrite extension installed and configured.
+本教程是基于你本地开发环境为Apache web服务器,大于5.3.23的PHP版本, 以及可以通过PDO扩展访问mysql数据库,并且需要apache服务器开启mod_rewrite模块.
 
-You must also ensure that Apache is configured to support ``.htaccess`` files. This is
-usually done by changing the setting:
+你必须确保你的apache服务器支持``.htaccess``文件. 这通常是通过设置apache配置文件实现:
 
 .. code-block:: apache
    :linenos:
 
     AllowOverride None
 
-to
+改成
 
 .. code-block:: apache
    :linenos:
 
     AllowOverride FileInfo
 
-in your ``httpd.conf`` file. Check with your distribution’s documentation for
-exact details. You will not be able to navigate to any page other than the home
-page in this tutorial if you have not configured mod_rewrite and .htaccess usage
-correctly.
+在``httpd.conf``文件. 检查你发行版本的详细描述. 配置mod_rewrite中的.htaccess确保本教程意外的页面无法访问.
 
 .. note::
 
-   Alternatively, if you are using PHP 5.4+ you may use the built-in web server instead of Apache for development.
+   另外,如果你使用的是PHP5.4+,那么你可以使用PHP内置的服务器而不是apache服务器开发.
 
-The tutorial application
-------------------------
+教程中的应用程序
+-------------
 
-The application that we are going to build is a simple inventory system to
-display which albums we own. The main page will list our collection and allow us
-to add, edit and delete CDs. We are going to need four pages in our website:
+我们要创建的是一个简单的数据库系统来显示我们自己的相册.据也将列出我们添加的数据,让我们添加,编辑和删除. 我们需要为网站创建四个页面:
 
 +----------------+------------------------------------------------------------+
 | Page           | Description                                                |
 +================+============================================================+
-| List of albums | This will display the list of albums and provide links to  |
-|                | edit and delete them. Also, a link to enable adding new    |
-|                | albums will be provided.                                   |
+| 相册列表         | 显示相片列表,包含添加,编辑,删除等相关链接                         |
 +----------------+------------------------------------------------------------+
-| Add new album  | This page will provide a form for adding a new album.      |
+| 添加新的相片     | 该页面用来创建新的相片.                                        |
 +----------------+------------------------------------------------------------+
-| Edit album     | This page will provide a form for editing an album.        |
+| 编辑相片        | 该页面用来编辑相片.                                            |
 +----------------+------------------------------------------------------------+
-| Delete album   | This page will confirm that we want to delete an album and |
-|                | then delete it.                                            |
+| 删除相片         | 该页面用来删除相片                                            |
 +----------------+------------------------------------------------------------+
 
-We will also need to store our data into a database. We will only need one table
-with these fields in it:
+我们只需要创建一个表存储数据:
 
 +------------+--------------+-------+-----------------------------+
 | Field name | Type         | Null? | Notes                       |
