@@ -1,24 +1,18 @@
 .. _user-guide.overview:
 
-Getting Started with Zend Framework 2
+开始使用 Zend Framework 2
 =====================================
 
-This tutorial is intended to give an introduction to using Zend Framework 2 by
-creating a simple database driven application using the Model-View-Controller
-paradigm. By the end you will have a working ZF2 application and you can then
-poke around the code to find out more about how it all works and fits together.
+这个教程用了Model-View-Controller的例子创建了一个简单的数据库应用程序来介绍怎么使用Zend Framework 2. 到最后你将有一个 ZF2的应用程序然后你可以查看代码以找出他是怎样工作的和怎样组合在一起的.
 
 .. _user-guide.overview.assumptions:
 
-Some assumptions
+一些假设
 ----------------
 
-This tutorial assumes that you are running at least PHP 5.3.23 with the Apache web server
-and MySQL, accessible via the PDO extension. Your Apache installation must have
-the mod_rewrite extension installed and configured.
+本教程假设您正在运行至少与Apache web服务器和MySQL,PHP 5.3.23通过PDO扩展。您的Apache必须安装mod_rewrite扩展安装和配置.
 
-You must also ensure that Apache is configured to support ``.htaccess`` files. This is
-usually done by changing the setting:
+你还必须确保你的apache配置必须支持 ``.htaccess`` 文件.这通常是通过改变设置:
 
 .. code-block:: apache
    :linenos:
@@ -32,39 +26,34 @@ to
 
     AllowOverride FileInfo
 
-in your ``httpd.conf`` file. Check with your distribution’s documentation for
-exact details. You will not be able to navigate to any page other than the home
-page in this tutorial if you have not configured mod_rewrite and .htaccess usage
+在你的 ``httpd.conf`` 文件. 检查与你的发行版中的文档的具体细节. 如果没有正确的配置mod_rewrite和.htaccess在本教程中你将不能操作除主页外的其他任何页面
 correctly.
 
-.. note::
+.. 注意::
 
-   Alternatively, if you are using PHP 5.4+ you may use the built-in web server instead of Apache for development.
+   或者, 如果你使用PHP5.4以上的版本你可以使用内置的web服务器代替Apache来开发.
 
-The tutorial application
+本教程应用
 ------------------------
 
-The application that we are going to build is a simple inventory system to
-display which albums we own. The main page will list our collection and allow us
-to add, edit and delete CDs. We are going to need four pages in our website:
+我们要构建应用程序是一个简单的库存系统来显示自己的专辑.主页将列出我们的收藏并且允许我们添加，编辑，和删除CDs. 在我们的网站中需要四个页面:
 
 +----------------+------------------------------------------------------------+
-| Page           | Description                                                |
+| 页面           | 描述                                                |
 +================+============================================================+
-| List of albums | This will display the list of albums and provide links to  |
-|                | edit and delete them. Also, a link to enable adding new    |
-|                | albums will be provided.                                   |
+| 专辑列表 		 | 这个页面将列出专辑并且提供链接修改和删除它们，并且，将提   |
+|                |  供一个添加专辑的有效连接							      |
+|                |                                                            |
 +----------------+------------------------------------------------------------+
-| Add new album  | This page will provide a form for adding a new album.      |
+| 添加新专辑     | 这个页面将提供一个表单来添加新专辑.					      |
 +----------------+------------------------------------------------------------+
-| Edit album     | This page will provide a form for editing an album.        |
+| 编辑专辑	     | 这个页面将提供一个表单来修改专辑.        				  |
 +----------------+------------------------------------------------------------+
-| Delete album   | This page will confirm that we want to delete an album and |
-|                | then delete it.                                            |
+| 删除专辑	     | 这个页面将确认我们是否要删除一个专辑然后删除它			  |
+|                |                                                            |
 +----------------+------------------------------------------------------------+
 
-We will also need to store our data into a database. We will only need one table
-with these fields in it:
+我们还需要将我们的数据存储在一个数据库中. 我们只需要这些字段的一个表:
 
 +------------+--------------+-------+-----------------------------+
 | Field name | Type         | Null? | Notes                       |
