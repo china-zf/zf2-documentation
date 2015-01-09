@@ -1,24 +1,22 @@
 ﻿.. _zend.config.factory:
 
-The Factory
-===========
+工厂方法
+=======
 
-The factory gives you the ability to load a configuration file to an array or to ``Zend\Config\Config`` object.
-The factory has two purposes
+工厂方法给予了导入一个配置文件到 ``Zend\Config\Config`` 的功能.
+工厂方式有两个目的
 
-- Loading configuration file(s)
-- Storing a configuration file
+- 导入配置文件
+- 存储一个配置文件
 
 .. note::
 
-   Storing the configuration will be done to *one* file. The factory is not aware of merging two 
-   or more configurations and will not store it into multiple files. If you want to store particular configuration sections to a different file
-   you should separate it manually.
+   存储配置到一个文件. 工厂方法是不会将合并的配置信息存储到多个文件中的.如果你需要存储到多个文件中去需要你自己手动操作.
 
-Loading configuration file
---------------------------
+导入配置文件
+----------
 
-The next example illustrates how to load a single configuration file
+接下来举例说明如何加载一个单独的配置文件.
 
 .. code-block:: php
    :linenos:
@@ -29,7 +27,7 @@ The next example illustrates how to load a single configuration file
    //Load a xml file as Config object
    $config = Zend\Config\Factory::fromFile(__DIR__.'/config/my.config.xml', true);
 
-For merging multiple configuration files
+合并多个配置文件
 
 .. code-block::php
    :linenos:
@@ -41,10 +39,10 @@ For merging multiple configuration files
         )
     );
 
-Storing configuration file
---------------------------
+存储配置文件
+----------
 
-Sometimes you want to store the configuration to a file. Also this is really easy to do
+有时候你需要存储配置文件到文件中去, 在这里你可以轻松的实现.
 
 .. code-block::php
    :linenos:

@@ -17,16 +17,16 @@ Zend Framework 2入门
 .. code-block:: apache
    :linenos:
 
-    AllowOverride None
+        AllowOverride None
 
-改成
+    改成
 
 .. code-block:: apache
    :linenos:
 
-    AllowOverride FileInfo
+        AllowOverride FileInfo
 
-在``httpd.conf``文件. 检查你发行版本的详细描述. 配置mod_rewrite中的.htaccess确保本教程意外的页面无法访问.
+    在``httpd.conf``文件. 检查你发行版本的详细描述. 配置mod_rewrite中的.htaccess确保本教程意外的页面无法访问.
 
 .. note::
 
