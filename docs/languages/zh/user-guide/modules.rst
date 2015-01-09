@@ -76,29 +76,24 @@ Zend Framework 2 使用一个模块系统在每个模块去组织你的主应用
 Autoloading files
 ^^^^^^^^^^^^^^^^^
 
-Our ``getAutoloaderConfig()`` method returns an array that is compatible with
-ZF2’s ``AutoloaderFactory``. We configure it so that we add a class map file to
-the ``ClassMapAutoloader`` and also add this module’s namespace to the
-``StandardAutoloader``. The standard autoloader requires a namespace and the
-path where to find the files for that namespace. It is PSR-0 compliant and so
-classes map directly to files as per the `PSR-0 rules
+在ZF2中我们使用 ``getAutoloaderConfig()``方法兼容返回一个``AutoloaderFactory``数组 .我们配置配置文件添加一个类的列表到``ClassMapAutoloader``,配置模块的命名空间到``StandardAutoloader``
+ 
+.当需要的文件在命名空间下的时候标准加载会引入一个命名空间路径. 这些都是符合``psr-0``规范的
 <https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md>`_.
 
-As we are in development, we don’t need to load files via the classmap, so we provide an empty array for the
-classmap autoloader. Create a file called ``autoload_classmap.php`` under ``zf2-tutorial/module/Album``:
+正如发展中, 我们不需要通过classmap加载文件, 所以我们在classmap提供一个空数组自动加载 创建一个叫做 ``autoload_classmap.php``文件在 ``zf2-tutorial/module/Album``下:
 
 .. code-block:: php
    :linenos:
 
     return array();
 
-As this is an empty array, whenever the autoloader looks for a class within the
-``Album`` namespace, it will fall back to the to ``StandardAutoloader`` for us.
+因为这是一个空数组, 当 autoloader 寻找``Album`` 命名空间下的类的时候
+, 他将为我们返回 ``StandardAutoloader``.
 
-.. note::
+.. 注意::
 
-    If you are using Composer, you could instead just create an empty
-    ``getAutoloaderConfig() { }`` and add to composer.json:
+    如果你使用Composer, 你可以创建一个空的``getAutoloaderConfig() { }`` 之后添加在 composer.json中:
 
     .. code-block:: javascript
        :linenos:
@@ -107,17 +102,15 @@ As this is an empty array, whenever the autoloader looks for a class within the
             "psr-0": { "Album": "module/Album/src/" }
         },
 
-    If you go this way, then you need to run ``php composer.phar update`` to update 
-    the composer autoloading files.
+    如果你使用这种方法, 你需要运行 ``php composer.phar update`` 来更新  composer 自动加载文件.
 
-Configuration
+配置
 -------------
 
-Having registered the autoloader, let’s have a quick look at the ``getConfig()``
-method in ``Album\Module``.  This method simply loads the
-``config/module.config.php`` file.
+已经注册了 autoloader, 让我们快速看看在``Album\Module``中的 ``getConfig()``方法.  这个方法简单的加载了
+``config/module.config.php`` 文件.
 
-Create a file called ``module.config.php`` under ``zf2-tutorial/module/Album/config``:
+在 ``zf2-tutorial/module/Album/config`` 下创建一个叫做``module.config.php`` 的文件 :
 
 .. code-block:: php
    :linenos:
@@ -135,24 +128,17 @@ Create a file called ``module.config.php`` under ``zf2-tutorial/module/Album/con
         ),
     );
 
-The config information is passed to the relevant components by the
-``ServiceManager``.  We need two initial sections: ``controllers`` and
-``view_manager``. The controllers section provides a list of all the controllers
-provided by the module. We will need one controller, ``AlbumController``, which
-we’ll reference as ``Album\Controller\Album``. The controller key must
-be unique across all modules, so we prefix it with our module name.
+配置信息通过``ServiceManager``传递给相关组件.  我们需要初始部分: ``controllers`` 和``view_manager``. 
+ controllers 部分 提供一个控制器列表. 我们需要一个, ``AlbumController``,引用为``Album\Controller\Album``的控制器. 控制器的键在所有的模型中必须唯一
+, 所以我们用模块名为它的前缀.
 
-Within the ``view_manager`` section, we add our view directory to the
-``TemplatePathStack`` configuration. This will allow it to find the view scripts for
-the ``Album`` module that are stored in our ``view/`` directory.
+在 ``view_manager`` 部分, 我们添加我们的视图目录到``TemplatePathStack`` 配置中. 他将允许我们找到存储在``view/``目录下的``Album``模块的视图文件.
 
-Informing the application about our new module
+为我们的新的模块通知应用程序
 ----------------------------------------------
 
-We now need to tell the ``ModuleManager`` that this new module exists. This is done
-in the application’s ``config/application.config.php`` file which is provided by the
-skeleton application. Update this file so that its ``modules`` section contains the
-``Album`` module as well, so the file now looks like this:
+现在我们需要告诉 ``ModuleManager`` 有一个新的模块存在了. 这个在应用程序中的``config/application.config.php``来完成它. 
+更新这个文件，以便``modules``部分能够包含``Album``模块，现在这个文件看起来应该是这样:
 
 (Changes required are highlighted using comments.)
 
@@ -176,7 +162,6 @@ skeleton application. Update this file so that its ``modules`` section contains 
         ),
     );
 
-As you can see, we have added our ``Album`` module into the list of modules
-after the ``Application`` module.
+正如你看到的, 我们已经在模块列表添加了 ``Album`` 模块在``Application``之后 .
 
-We have now set up the module ready for putting our custom code into it.
+现在我们可以把我们的代码放在我们已经设置好的模块中了.

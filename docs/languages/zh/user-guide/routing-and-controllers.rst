@@ -1,36 +1,28 @@
 .. _user-guide.routing-and-controllers:
 
-Routing and controllers
+路由和控制器
 =======================
 
-We will build a very simple inventory system to display our album
-collection. The home page will list our collection and allow us to add, edit and
-delete albums. Hence the following pages are required:
+我们将创建一个非常简单的库存系统来显示我们的专辑. 主页将显示列表之后允许我们添加，编辑和删除. 因此需要以下的页面:
 
 +---------------+------------------------------------------------------------+
-| Page          | Description                                                |
+| 页面          | 描述                                                       |
 +===============+============================================================+
-| Home          | This will display the list of albums and provide links to  |
-|               | edit and delete them. Also, a link to enable adding new    |
-|               | albums will be provided.                                   |
+| 主页          | 这将显示相册的列表,并提供链接来编辑和删除它们。			 |
+|	            |  启用链接添加新专辑也将提供                                |
 +---------------+------------------------------------------------------------+
-| Add new album | This page will provide a form for adding a new album.      |
+| 添加新专辑    | 这个页面将提供一个表单来添加一个新的专辑.                  |
 +---------------+------------------------------------------------------------+
-| Edit album    | This page will provide a form for editing an album.        |
+| 编辑专辑      | 这个页面将提供一个表单编辑一个专辑.                        |
 +---------------+------------------------------------------------------------+
-| Delete album  | This page will confirm that we want to delete an album and |
-|               | then delete it.                                            |
+| 删除专辑      | 本页将确认我们想删除专辑和然后删除它                       |
 +---------------+------------------------------------------------------------+
 
-Before we set up our files, it’s important to understand how the framework
-expects the pages to be organised. Each page of the application is known as an
-*action* and actions are grouped into *controllers* within *modules*. Hence, you
-would generally group related actions into a controller; for instance, a news
-controller might have actions of ``current``, ``archived`` and ``view``.
+我们设置文件之前,重要的是要了解如何组织框架页面. 每个应用程序页面被叫做 is known as an*action*
+这些action在 *modules*的*controllers*中 . 因此, 你需要把一般相关的action组织在一个controller中; 
+例如, 一个新的控制器中有 ``current``, ``archived`` 和 ``view``.
 
-As we have four pages that all apply to albums, we will group them in a single
-controller ``AlbumController`` within our ``Album`` module as four actions. The
-four actions will be:
+由于我们在专辑中有四个页面, 我们将把他们放在``Album``模块中的一个控制器中`AlbumController``. 四个action将是:
 
 +---------------+---------------------+------------+
 | Page          | Controller          | Action     |
@@ -44,9 +36,8 @@ four actions will be:
 | Delete album  | ``AlbumController`` | ``delete`` |
 +---------------+---------------------+------------+
 
-The mapping of a URL to a particular action is done using routes that are defined
-in the module’s ``module.config.php`` file. We will add a route for our album
-actions. This is the updated module config file with the new code highlighted.
+在模型的``module.config.php``文件中定义了URL到特定的action 的映射. 我们将为我们的 album
+actions添加路由. 模型配置文件中的更新代码高亮显示.
 
 .. code-block:: php
    :linenos:
@@ -86,18 +77,14 @@ actions. This is the updated module config file with the new code highlighted.
         ),
     );
 
-The name of the route is ‘album’ and has a type of ‘segment’. The segment route
-allows us to specify placeholders in the URL pattern (route) that will be mapped
-to named parameters in the matched route. In this case, the route is
-**``/album[/:action][/:id]``** which will match any URL that starts with
-``/album``. The next segment will be an optional action name, and then finally
-the next segment will be mapped to an optional id. The square brackets indicate
-that a segment is optional. The constraints section allows us to ensure that the
-characters within a segment are as expected, so we have limited actions to
-starting with a letter and then subsequent characters only being alphanumeric,
-underscore or hyphen. We also limit the id to a number.
+名称为 ‘album’ 有一个 ‘segment’类型. segment 类型的路由
+允许我们在URL中指定占位符pattern (route)参数将会映射到参数中. 因此, 路由
+**``/album[/:action][/:id]``** 将会匹配以``/album``开始的 URL
+. 下面一个部分将是一个可选的控制器名称的参数, 最后一个部分将被映射到一个可选的id. 
+方括号表示这段是可选的. 让我们确保我们所有约束的字符在一个部分, constraints 部分我们已经限制了
+actions由一个字母开始之后后续字符必须将是数字或者字母,. 我们也限制了id必须是数字.
 
-This route allows us to have the following URLs:
+路由允许我们有以下的 URLs:
 
 +---------------------+------------------------------+------------+
 | URL                 | Page                         | Action     |
@@ -111,28 +98,22 @@ This route allows us to have the following URLs:
 | ``/album/delete/4`` | Delete album with an id of 4 | ``delete`` |
 +---------------------+------------------------------+------------+
 
-Create the controller
+创建一个控制器
 =====================
 
-We are now ready to set up our controller. In Zend Framework 2, the controller
-is a class that is generally called ``{Controller name}Controller``. Note that
-``{Controller name}`` must start with a capital letter.  This class lives in a file
-called ``{Controller name}Controller.php`` within the ``Controller`` directory for the
-module. In our case that is ``module/Album/src/Album/Controller``. Each action is
-a public method within the controller class that is named ``{action name}Action``.
-In this case ``{action name}`` should start with a lower case letter.
+现在,我们可以建立我们的控制器. 在 Zend Framework 2中, 控制器是一个类通常叫做 ``{Controller name}Controller``.
+ 注意``{Controller name}`` 必须以一个大写字母开头.  这个类在一个叫做 ``{Controller name}Controller.php``的文件中 ，在模块的 ``Controller`` 目录下 . 
+在我们的例子中是 ``module/Album/src/Album/Controller``.控制器的类中每个action必须是一个公共的方法叫做 ``{action name}Action``.
+ ``{action name}`` 必须以一个小写字母开始.
 
-.. note::
+.. 注意::
 
-    This is by convention. Zend Framework 2 doesn’t provide many
-    restrictions on controllers other than that they must implement the
-    ``Zend\Stdlib\Dispatchable`` interface. The framework provides two abstract
-    classes that do this for us: ``Zend\Mvc\Controller\AbstractActionController``
-    and ``Zend\Mvc\Controller\AbstractRestfulController``. We’ll be using the
-    standard ``AbstractActionController``, but if you’re intending to write a
-    RESTful web service, ``AbstractRestfulController`` may be useful.
+    按照惯例. Zend Framework 2 没有很多的限制他们必须实现``Zend\Stdlib\Dispatchable``接口. 
+	框架提供了两个抽象的类为我们这样做: ``Zend\Mvc\Controller\AbstractActionController``
+    和 ``Zend\Mvc\Controller\AbstractRestfulController``. 我们将使用标准的 ``AbstractActionController``,
+	如果你打算做RESTful服务, ``AbstractRestfulController`` 可能会用到.
 
-Let’s go ahead and create our controller class ``AlbumController.php`` at ``zf2-tutorials/module/Album/src/Album/Controller`` :
+让我们创建我们的控制器类 ``AlbumController.php`` 在 ``zf2-tutorials/module/Album/src/Album/Controller`` :
 
 .. code-block:: php
    :linenos:
@@ -161,19 +142,17 @@ Let’s go ahead and create our controller class ``AlbumController.php`` at ``zf
         }
     }
     
-.. note::
+.. 注意::
 
-    Make sure to register the new ``Album`` module in the "modules" section of your
-    ``config/application.config.php``. You also have to provide a :ref:`Module Class
-    <zend.module-manager.module-class>` for the Album module to be recognized by the MVC.
+    确保注册了新的模块``Album`` 在``config/application.config.php``文件中的 "modules" 部分
+    . 你还需要提供一个 :ref:`Module Class
+    <zend.module-manager.module-class>` 为专辑模块能被the MVC认识.
 
-.. note::
+.. 注意::
 
-    We have already informed the module about our controller in the
-    ‘controller’ section of ``module/Album/config/module.config.php``.
+    我们已经在``module/Album/config/module.config.php``中配置了我们的‘controller’部分 .
 
-We have now set up the four actions that we want to use. They won’t work yet
-until we set up the views. The URLs for each action are:
+我们现在设置四个我们想使用的actions. 在设置视图之前他们将不会工作. 每个action的URLS是:
 
 +------------------------------------------------+----------------------------------------------------+
 | URL                                            | Method called                                      |
@@ -187,17 +166,15 @@ until we set up the views. The URLs for each action are:
 | ``http://zf2-tutorial.localhost/album/delete`` | ``Album\Controller\AlbumController::deleteAction`` |
 +------------------------------------------------+----------------------------------------------------+
 
-We now have a working router and the actions are set up for each page of our
-application.
+现在我们有一个工作中的路由和设置好了action的页面.
 
-It’s time to build the view and the model layer.
+是时候建立视图和模型层.
 
-Initialise the view scripts
+初始化视图脚本
 ---------------------------
 
-To integrate the view into our application all we need to do is create some view
-script files. These files will be executed by the ``DefaultViewStrategy`` and will be
-passed any variables or view models that are returned from the controller action
+我们需要创建一些视图文件在我们的应用中. 这些文件将通过 ``DefaultViewStrategy``来执行 之后所有的变量将会被通过
+ or view models that are returned from the controller action
 method. These view scripts are stored in our module’s views directory within a
 directory named after the controller. Create these four empty files now:
 
@@ -206,4 +183,4 @@ directory named after the controller. Create these four empty files now:
 * ``module/Album/view/album/album/edit.phtml``
 * ``module/Album/view/album/album/delete.phtml``
 
-We can now start filling everything in, starting with our database and models.
+我们现在可以从我们的数据库和模型中开始写代码.
